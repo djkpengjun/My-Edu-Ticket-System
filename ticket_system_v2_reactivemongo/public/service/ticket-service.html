@@ -1,0 +1,62 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/core-ajax/core-ajax.html">
+<polymer-element name="ticket-service" attributes="ticketGroups">
+
+  <template>
+
+    <style>
+    :host {
+      display: none;
+    }
+    </style>
+
+    <core-ajax id="loadSchools"
+      auto
+      method="GET"
+      url="/schools" on-core-response="{{schoolsLoaded}}" on-core-error="{{schoolsError}}"
+      handleAs="json">
+      auto
+    </core-ajax>
+
+    <core-ajax id="getTicketsForSchool"
+      method="GET"
+      url="/schools/{{school_id}}" on-core-response="{{schoolsLoaded}}" on-core-error="{{schoolsError}}"
+      handleAs="json">
+    </core-ajax>
+
+  </template>
+
+  <script>
+
+    Polymer('ticket-service', {
+
+      created: function() {
+        this.ticketGroups = [];
+      },
+
+      schoolsLoaded: function() {
+        // Make a copy of the loaded data
+        this.ticketGroups = this.$.loadSchools.response.slice(0);
+      },
+
+      schoolsError: function(event){
+        var error = this.$.loadSchools.error;
+        console.log(error);
+        alert(error);
+      },
+
+      /**
+       * Get tickets for currently selected school
+       *
+       * @method getTicket
+       * @param uid {id} Unique ID for a school
+       */
+      getTicketsForSchool: function(school_id) {
+        this.school_id = school_id;
+        this.$.getTicketsForSchool.go();
+      }
+
+    });
+  </script>
+
+</polymer-element>

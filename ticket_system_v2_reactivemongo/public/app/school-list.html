@@ -1,0 +1,51 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<link rel="import" href="../service/ticket-service.html">
+<link rel="import" href="school-card.html">
+
+<polymer-element name="school-list" attributes="show">
+  <template>
+
+    <style>
+      :host {
+        display: block;
+        width: 100%;
+      }
+      school-card {
+        margin-bottom: 30px;
+      }
+    </style>
+
+    <ticket-service id="service" ticketGroups="{{schools}}"></ticket-service>
+    
+    <div layout vertical center>
+
+      <template repeat="{{school in schools}}">
+
+        <school-card school_number="{{school.school_number}}" on-school-tap="{{getTicketsForSchool}}" >
+
+          <img src="../images/avatar-0{{school.school_bucket}}.svg" width="70" height="70">
+
+          <h2>{{school.school_number}} -- {{school.school_name}}</h2>
+
+        </school-card>
+
+      </template>
+
+    </div>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      getTicketsForSchool: function(event, detail, sender) {
+        var school = sender.templateInstance.model.school;
+        this.$.service.getTicketsForSchool(school.school_id);
+      }
+
+    });
+
+  </script>
+</polymer-element>

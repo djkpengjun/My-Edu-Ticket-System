@@ -1,0 +1,11 @@
+@(message: String)
+
+@main("Welcome to Play") {
+
+    <form action="@routes.TicketController.login()" method="post">
+        <input name="username" type="text">
+        <input name="password" type="text">
+        <button>Login</button>
+    </form>
+
+}

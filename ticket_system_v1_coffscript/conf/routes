@@ -1,0 +1,25 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                     controllers.Application.index
+
+POST        /person               controllers.Application.addPerson
+
+GET         /persons              controllers.Application.getPersons
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file         controllers.Assets.at(path="/public", file)
+
+GET         /webjars/*file        controllers.WebJarAssets.at(file)
+
+
+# My Edu ticket system
+
+POST        /login                controllers.Application.login
+
+GET         /credential           controllers.TicketController.getCredential
+
+GET         /tickets              controllers.TicketController.getTickets
